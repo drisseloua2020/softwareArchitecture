@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pg-deployment
+spec:
+  selector:
+    matchLabels:
+      app: pg-deployment
+  template:
+    metadata:
+      labels:
+        app: pg-deployment
+    spec:
+      containers:
+      - name: pg
+        image: pg:latest
+        ports:
+        - containerPort: 27017
+        env:
+          - name: PG_INITDB_ROOT_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: pgdb-secret
+                key: pg-root-username
+          - name: PG_INITDB_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: pgdb-secret
+                key: pg-root-pas

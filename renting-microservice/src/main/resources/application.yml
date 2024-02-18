@@ -1,0 +1,19 @@
+# Database properties
+spring:
+  datasource:
+    url: jdbc:postgresql://database-host:database-port/database-name
+    username: database-username
+    password: database-password
+
+  # HikariCP settings
+  datasource.hikari:
+    connection-timeout: 20000
+    maximum-pool-size: 5
+    minimum-idle: 1
+    idle-timeout: 30000
+
+  # Hibernate settings
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update

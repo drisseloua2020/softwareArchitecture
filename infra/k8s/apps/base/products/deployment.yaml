@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tools-deployment
+spec:
+  selector:
+    matchLabels:
+      app: tools-deployment
+  template:
+    metadata:
+      labels:
+        app: tools-deployment
+    spec:
+      containers:
+      - name: tools
+        image: tools:latest
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: PG_URI  ## Define the name of the variable
+          valueFrom:
+            configMapKeyRef:
+              name: tools-configmap   ## This must match the name of the configmap
+              key: PG_URI  ## The key to fetch
+        - name: DATABASE  ## Define the name of the variable
+          valueFrom:
+            configMapKeyRef:
+              name: tools-configmap   ## This must match the name of the configmap
+              key: DATABASE  ## The key to fetch
+        ports:
+        - name: http
+          containerPort: 5000
+          protocol: TCP
